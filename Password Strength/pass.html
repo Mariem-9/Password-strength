@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength</title>
+    <link rel="stylesheet" href="pass.css">
+</head>
+<body>
+  <div class="container">
+    <div class="input-box">
+        <input type="password" id="password" placeholder="password">
+        <button type="submit"><img src="Rside.png" id="icon"></button>
+        <p id="message">Password is <span id="str"></span></p>
+    </div>
+  </div>  
+  <script>
+    var message = document.getElementById("message");
+    var password = document.getElementById("password");
+    var str = document.getElementById("str");
+
+    password.addEventListener('input', ()=>{
+        if(password.value.length > 0){
+            message.style.display = "block";
+        }else{
+            message.style.display = "none";
+        }
+        var strength = 0;
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if(password.value.match(regex)) {
+        strength = 100;
+    } else {
+        // Check for lowercase letters
+        if(password.value.match(/[a-z]/)) {
+            strength += 25;
+        }
+        // Check for uppercase letters
+        if(password.value.match(/[A-Z]/)) {
+            strength += 25;
+        }
+        // Check for numbers
+        if(password.value.match(/\d/)) {
+            strength += 25;
+        }
+        // Check for special characters
+        if(password.value.match(/[@$!%*?&]/)) {
+            strength += 25;
+        }
+    }
+
+    // Update strength indicator
+    if (strength < 50) {
+        str.innerHTML = "weak";
+        message.style.color = "red";
+        password.style.borderColor = "red";
+    } else if (strength >= 50 && strength < 75) {
+        str.innerHTML = "medium";
+        message.style.color = "yellow";
+        password.style.borderColor = "yellow";
+    } else if (strength >= 75) {
+        str.innerHTML = "strong";
+        message.style.color = "green";
+        password.style.borderColor = "green";
+    }
+});
+   
+  </script>
+</body>
+</html>
